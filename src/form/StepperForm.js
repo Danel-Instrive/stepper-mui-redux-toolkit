@@ -3,8 +3,20 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { setActiveStep } from "../redux/Reducer/Dashboard/DashboardPageReducer";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  text: {
+    marginBottom: 16,
+    marginTop: 25,
+  },
+  msgTxt: {
+    color: "red",
+  },
+}));
 
 const StepperForm = ({ formFields, forms, handleSubmit, setAllData }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const activeStep = useSelector((state) => state.dashboard.activeStep);
   console.log(activeStep, "activeStep");
@@ -47,7 +59,7 @@ const StepperForm = ({ formFields, forms, handleSubmit, setAllData }) => {
       {({ isSubmitting }) => (
         <Form autoComplete="off">
           {formFields?.map((field, index) => (
-            <div key={index} style={{ marginBottom: 16, marginTop: 25 }}>
+            <div key={index} className={classes.text}>
               <Field
                 autoComplete="off"
                 name={field.name}
@@ -59,7 +71,7 @@ const StepperForm = ({ formFields, forms, handleSubmit, setAllData }) => {
                 fullWidth
               />
               <ErrorMessage name={field.name}>
-                {(msg) => <div style={{ color: "red" }}>{msg}</div>}
+                {(msg) => <div className={classes.msgTxt}>{msg}</div>}
               </ErrorMessage>
             </div>
           ))}
